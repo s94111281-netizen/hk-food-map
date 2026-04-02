@@ -24,9 +24,44 @@
     attribution: '© OpenStreetMap'
   }).addTo(map);
 
-  L.marker([22.3193, 114.1694])
-    .addTo(map)
-    .bindPopup("香港美食 🍜");
+// 兰芳园
+L.marker([22.2819, 114.1550])
+  .addTo(map)
+  .bindPopup(`
+    <b>兰芳园</b><br>
+    茶餐厅 ☕<br>
+    ⭐️⭐️⭐️⭐️<br>
+    <hr>
+    <b>Discourse</b><br>
+    Register: informal, hybrid<br>
+    Appraisal: nostalgic, local identity
+  `);
+
+// 添好运
+L.marker([22.3240, 114.1680])
+  .addTo(map)
+  .bindPopup(`
+    <b>添好运</b><br>
+    点心 🍤<br>
+    ⭐️⭐️⭐️⭐️<br>
+    <hr>
+    <b>Discourse</b><br>
+    Register: semi-formal<br>
+    Appraisal: quality-focused, global branding
+  `);
+
+// 澳洲牛奶公司
+L.marker([22.3045, 114.1710])
+  .addTo(map)
+  .bindPopup(`
+    <b>澳洲牛奶公司</b><br>
+    早餐 🥛<br>
+    ⭐️⭐️⭐️⭐️<br>
+    <hr>
+    <b>Discourse</b><br>
+    Register: informal<br>
+    Appraisal: efficiency, local routine
+  `);
 </script>
 
 </body>
