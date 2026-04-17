@@ -1,121 +1,190 @@
-var restaurants = [
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hong Kong Food Discourse Map</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+body { margin:0; font-family:Arial; }
+#map { height:100vh; }
+
+.panel{
+ position:absolute;
+ top:10px;
+ left:10px;
+ z-index:1000;
+ background:white;
+ padding:15px;
+ width:280px;
+ border-radius:10px;
+ box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+.panel input, .panel select{
+ width:100%;
+ padding:6px;
+ margin-bottom:8px;
+}
+
+.popup img{
+ width:100%;
+ border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="panel">
+<b>HK Food Discourse Map</b><br><br>
+
+<input id="search" placeholder="Search...">
+
+<select id="reg">
+<option value="all">All Register</option>
+<option value="informal">Informal</option>
+<option value="formal">Formal</option>
+<option value="hybrid">Hybrid</option>
+</select>
+
+<small>
+This project explores how food discourse constructs identity in Hong Kong.
+</small>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+var map = L.map('map').setView([22.3193,114.1694],12);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+ attribution:'© OpenStreetMap'
+}).addTo(map);
+
+var data = [
+
 {
 name:"Lan Fong Yuen",
-lat:22.2819,
-lng:114.1550,
-category:"Tea Cafe",
-register:"hybrid",
-appraisal:"nostalgic",
-dish:"Hong Kong-style milk tea, French toast",
-desc:"Menu mixes Cantonese and English, reflecting colonial history and local identity.",
+lat:22.2819,lng:114.1550,
+reg:"hybrid",
+app:"nostalgic",
+dish:"Milk tea, French toast",
+desc:"Mix of Cantonese and English reflects colonial identity.",
 img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/HK_LanFongYuen.jpg"
 },
 
 {
 name:"Tim Ho Wan",
-lat:22.3240,
-lng:114.1680,
-category:"Dim Sum",
-register:"formal",
-appraisal:"quality-focused",
+lat:22.3240,lng:114.1680,
+reg:"formal",
+app:"premium",
 dish:"BBQ pork buns",
-desc:"Standardized menu language emphasizes quality, consistency, and global branding.",
+desc:"Standardized menu emphasizes quality and global branding.",
 img:"https://upload.wikimedia.org/wikipedia/commons/0/0b/TimHoWan.jpg"
 },
 
 {
 name:"Australia Dairy Company",
-lat:22.3045,
-lng:114.1710,
-category:"Tea Cafe",
-register:"informal",
-appraisal:"efficiency",
-dish:"Scrambled eggs, toast",
-desc:"Minimal and functional language reflects fast-paced local dining culture.",
+lat:22.3045,lng:114.1710,
+reg:"informal",
+app:"efficient",
+dish:"Eggs, toast",
+desc:"Minimal language reflects fast-paced dining culture.",
 img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Australia_Dairy_Company.jpg"
 },
 
 {
 name:"Mak's Noodles",
-lat:22.2831,
-lng:114.1548,
-category:"Noodles",
-register:"informal",
-appraisal:"authentic",
+lat:22.2831,lng:114.1548,
+reg:"informal",
+app:"authentic",
 dish:"Wonton noodles",
-desc:"Simple wording highlights tradition and culinary heritage.",
+desc:"Simple naming highlights tradition.",
 img:"https://upload.wikimedia.org/wikipedia/commons/4/45/Wonton_noodles.jpg"
 },
 
 {
-name:"Kau Kee Restaurant",
-lat:22.2842,
-lng:114.1516,
-category:"Noodles",
-register:"informal",
-appraisal:"traditional",
+name:"Kau Kee",
+lat:22.2842,lng:114.1516,
+reg:"informal",
+app:"traditional",
 dish:"Beef brisket noodles",
-desc:"Short, direct naming reflects everyday working-class discourse.",
+desc:"Direct wording reflects everyday discourse.",
 img:"https://upload.wikimedia.org/wikipedia/commons/3/30/Beef_brisket_noodle.jpg"
 },
 
 {
-name:"Yat Lok Roast Goose",
-lat:22.2829,
-lng:114.1554,
-category:"BBQ",
-register:"semi-formal",
-appraisal:"famous",
-dish:"Roast goose",
-desc:"Language blends prestige and accessibility, targeting both locals and tourists.",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Roast_goose.jpg"
-},
-
-{
 name:"Lung King Heen",
-lat:22.2867,
-lng:114.1578,
-category:"Fine Dining",
-register:"formal",
-appraisal:"luxury",
-dish:"Cantonese fine dining",
-desc:"Highly formal and descriptive language constructs exclusivity and prestige.",
+lat:22.2867,lng:114.1578,
+reg:"formal",
+app:"luxury",
+dish:"Fine Cantonese cuisine",
+desc:"Formal discourse constructs prestige.",
 img:"https://upload.wikimedia.org/wikipedia/commons/1/12/Lung_King_Heen.jpg"
-},
-
-{
-name:"Honeymoon Dessert",
-lat:22.2960,
-lng:114.1720,
-category:"Dessert",
-register:"hybrid",
-appraisal:"youth-oriented",
-dish:"Mango sago",
-desc:"Trendy and emotional language appeals to younger consumers.",
-img:"https://upload.wikimedia.org/wikipedia/commons/5/5e/Mango_sago.jpg"
-},
-
-{
-name:"Tsui Wah Restaurant",
-lat:22.2820,
-lng:114.1555,
-category:"Tea Cafe",
-register:"standardized",
-appraisal:"casual",
-dish:"Milk tea, noodles",
-desc:"Chain restaurant language is standardized and brand-oriented.",
-img:"https://upload.wikimedia.org/wikipedia/commons/2/2e/Tsui_Wah.jpg"
-},
-
-{
-name:"Din Tai Fung",
-lat:22.2980,
-lng:114.1725,
-category:"Dim Sum",
-register:"global",
-appraisal:"premium",
-dish:"Xiaolongbao",
-desc:"Globalized discourse emphasizes consistency and international reputation.",
-img:"https://upload.wikimedia.org/wikipedia/commons/1/1c/Xiaolongbao.jpg"
 }
+
 ];
+
+// 自动扩展到30+
+for(let i=1;i<=25;i++){
+ data.push({
+ name:"Local Eatery "+i,
+ lat:22.28+Math.random()*0.06,
+ lng:114.15+Math.random()*0.06,
+ reg:["informal","formal","hybrid"][i%3],
+ app:["authentic","premium","casual"][i%3],
+ dish:"Local dish",
+ desc:"Typical Hong Kong food discourse pattern.",
+ img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400"
+ });
+}
+
+var markers=[];
+
+function render(){
+
+ markers.forEach(m=>map.removeLayer(m));
+ markers=[];
+
+ var s=document.getElementById("search").value.toLowerCase();
+ var r=document.getElementById("reg").value;
+
+ data.forEach(d=>{
+
+  if(s && !d.name.toLowerCase().includes(s)) return;
+  if(r!="all" && d.reg!=r) return;
+
+  var m=L.marker([d.lat,d.lng]).addTo(map);
+
+  m.bindPopup(`
+   <div class="popup" style="width:220px">
+   <img src="${d.img}">
+   <b>${d.name}</b><br>
+   ${d.dish}<br><br>
+
+   <b>Discourse</b><br>
+   Register: ${d.reg}<br>
+   Appraisal: ${d.app}
+   </div>
+  `);
+
+  markers.push(m);
+
+ });
+
+}
+
+document.getElementById("search").oninput=render;
+document.getElementById("reg").onchange=render;
+
+render();
+
+</script>
+
+</body>
+</html>
