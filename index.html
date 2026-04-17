@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hong Kong Food Discourse Map</title>
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
@@ -21,21 +19,21 @@ body{
     left:10px;
     z-index:1000;
     background:white;
-    padding:14px;
+    padding:15px;
     width:300px;
     border-radius:10px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
 }
-.filter-btn{
-    margin:4px;
-    padding:6px 10px;
-    border:none;
+.panel h2{
+    margin:0 0 10px 0;
+    font-size:18px;
+}
+.panel input, .panel select{
+    width:100%;
+    padding:8px;
+    margin-bottom:10px;
+    border:1px solid #ccc;
     border-radius:6px;
-    cursor:pointer;
-    background:#f2f2f2;
-}
-.filter-btn:hover{
-    background:#ddd;
 }
 .popup-img{
     width:100%;
@@ -46,16 +44,31 @@ body{
 <body>
 
 <div class="panel">
-    <h3>Hong Kong Food Discourse Map</h3>
-    <p><b>Research Focus:</b> Multimodal discourse analysis of Hong Kong food culture through image, text, and spatial mapping.</p>
+    <h2>Hong Kong Food Map</h2>
 
-    <b>Filter by Category:</b><br>
-    <button class="filter-btn" onclick="filterCategory('all')">All</button>
-    <button class="filter-btn" onclick="filterCategory('茶餐厅')">Cha Chaan Teng</button>
-    <button class="filter-btn" onclick="filterCategory('点心')">Dim Sum</button>
-    <button class="filter-btn" onclick="filterCategory('拉面')">Ramen</button>
-    <button class="filter-btn" onclick="filterCategory('甜品')">Dessert</button>
-    <button class="filter-btn" onclick="filterCategory('快餐')">Fast Food</button>
+    <input type="text" id="searchBox" placeholder="Search restaurant...">
+
+    <select id="categoryFilter">
+        <option value="all">All Categories</option>
+        <option value="Tea Cafe">Tea Cafe</option>
+        <option value="Dim Sum">Dim Sum</option>
+        <option value="Dessert">Dessert</option>
+        <option value="Seafood">Seafood</option>
+        <option value="Noodles">Noodles</option>
+    </select>
+
+    <select id="registerFilter">
+        <option value="all">All Registers</option>
+        <option value="informal">Informal</option>
+        <option value="formal">Formal</option>
+        <option value="hybrid">Hybrid</option>
+    </select>
+
+    <small>
+        <b>Discourse Focus:</b><br>
+        This project examines how food descriptions in Hong Kong construct
+        identity through register and evaluative language.
+    </small>
 </div>
 
 <div id="map"></div>
@@ -70,56 +83,54 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 }).addTo(map);
 
 var restaurants = [
-    {name:"兰芳园",lat:22.2819,lng:114.1550,type:"茶餐厅",img:"https://picsum.photos/220/140?1",desc:"Milk tea and French toast. Hybrid Cantonese-English menu language.",reg:"informal, hybrid",app:"nostalgic"},
-    {name:"添好运",lat:22.3240,lng:114.1680,type:"点心",img:"https://picsum.photos/220/140?2",desc:"Michelin dim sum emphasizing consistency and quality.",reg:"semi-formal",app:"premium"},
-    {name:"澳洲牛奶公司",lat:22.3045,lng:114.1710,type:"茶餐厅",img:"https://picsum.photos/220/140?3",desc:"Efficient breakfast discourse and fast-paced interaction.",reg:"informal",app:"functional"},
-    {name:"一兰拉面",lat:22.2965,lng:114.1722,type:"拉面",img:"https://picsum.photos/220/140?4",desc:"Standardized branding and global ramen discourse.",reg:"standardized",app:"global"},
-    {name:"翠华餐厅",lat:22.2820,lng:114.1555,type:"茶餐厅",img:"https://picsum.photos/220/140?5",desc:"Casual urban dining language.",reg:"hybrid",app:"casual"},
-    {name:"九记牛腩",lat:22.2833,lng:114.1525,type:"茶餐厅",img:"https://picsum.photos/220/140?6",desc:"Authentic local food discourse.",reg:"informal",app:"authentic"},
-    {name:"胜香园",lat:22.2825,lng:114.1548,type:"茶餐厅",img:"https://picsum.photos/220/140?7",desc:"Street-food identity construction.",reg:"informal",app:"traditional"},
-    {name:"甘牌烧鹅",lat:22.2770,lng:114.1725,type:"点心",img:"https://picsum.photos/220/140?8",desc:"Brand prestige and culinary heritage.",reg:"semi-formal",app:"famous"},
-    {name:"谭仔米线",lat:22.3150,lng:114.1730,type:"拉面",img:"https://picsum.photos/220/140?9",desc:"Youth-oriented trendy food discourse.",reg:"hybrid",app:"trendy"},
-    {name:"满记甜品",lat:22.3060,lng:114.1725,type:"甜品",img:"https://picsum.photos/220/140?10",desc:"Dessert branding and chain-store discourse.",reg:"standardized",app:"chain"},
-    {name:"McDonald's",lat:22.2890,lng:114.1890,type:"快餐",img:"https://picsum.photos/220/140?11",desc:"Global fast-food discourse.",reg:"global",app:"mass"},
-    {name:"KFC",lat:22.2900,lng:114.1900,type:"快餐",img:"https://picsum.photos/220/140?12",desc:"Corporate language and efficiency.",reg:"global",app:"mass"}
+{ name:"Lan Fong Yuen", lat:22.2819, lng:114.1550, category:"Tea Cafe", register:"hybrid", appraisal:"nostalgic", dish:"Milk tea and French toast", img:"https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400" },
+{ name:"Tim Ho Wan", lat:22.3240, lng:114.1680, category:"Dim Sum", register:"formal", appraisal:"premium", dish:"BBQ pork buns", img:"https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400" },
+{ name:"Australia Dairy", lat:22.3045, lng:114.1710, category:"Tea Cafe", register:"informal", appraisal:"efficient", dish:"Scrambled eggs", img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400" },
+{ name:"Mak's Noodles", lat:22.2831, lng:114.1548, category:"Noodles", register:"informal", appraisal:"authentic", dish:"Wonton noodles", img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=400" },
+{ name:"Kau Kee", lat:22.2842, lng:114.1516, category:"Noodles", register:"informal", appraisal:"traditional", dish:"Beef brisket noodles", img:"https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=400" }
 ];
 
-// 自动补足到50个
-for(let i=13;i<=50;i++){
+// 自动生成更多点（避免手动写50个）
+for(let i=1;i<=45;i++){
     restaurants.push({
-        name:"Restaurant "+i,
+        name:"Local Food Spot " + i,
         lat:22.28 + Math.random()*0.08,
-        lng:114.15 + Math.random()*0.08,
-        type:["茶餐厅","点心","拉面","甜品","快餐"][i%5],
-        img:`https://picsum.photos/220/140?${i}`,
-        desc:"Sample multimodal restaurant discourse data.",
-        reg:["informal","formal","hybrid","standardized"][i%4],
-        app:["nostalgic","premium","trendy","authentic"][i%4]
+        lng:114.14 + Math.random()*0.08,
+        category:["Tea Cafe","Dim Sum","Dessert","Seafood","Noodles"][i%5],
+        register:["informal","formal","hybrid"][i%3],
+        appraisal:["authentic","premium","casual","nostalgic"][i%4],
+        dish:"Signature local dish",
+        img:"https://images.unsplash.com/photo-1544025162-d76694265947?w=400"
     });
 }
 
-var markers=[];
+var markers = [];
 
-function renderMarkers(data){
-    markers.forEach(m=>map.removeLayer(m));
+function renderMarkers(){
+    markers.forEach(m => map.removeLayer(m));
     markers=[];
 
-    data.forEach(r=>{
-        let marker=L.marker([r.lat,r.lng]).addTo(map)
-        .bindPopup(`
-            <div style="width:220px">
-                <img src="${r.img}" class="popup-img"><br><br>
-                <b>${r.name}</b><br>
-                ${r.type}<br><br>
+    var search = document.getElementById("searchBox").value.toLowerCase();
+    var category = document.getElementById("categoryFilter").value;
+    var reg = document.getElementById("registerFilter").value;
 
-                <b>Dish Description</b><br>
-                ${r.desc}<br><br>
+    restaurants.forEach(r=>{
+        if(search && !r.name.toLowerCase().includes(search)) return;
+        if(category !== "all" && r.category !== category) return;
+        if(reg !== "all" && r.register !== reg) return;
 
-                <hr>
+        var marker = L.marker([r.lat,r.lng]).addTo(map);
+
+        marker.bindPopup(`
+            <div style="width:230px">
+                <img class="popup-img" src="${r.img}">
+                <h3>${r.name}</h3>
+                <b>Category:</b> ${r.category}<br>
+                <b>Dish:</b> ${r.dish}<br><br>
 
                 <b>Discourse Analysis</b><br>
-                <b>Register:</b> ${r.reg}<br>
-                <b>Appraisal:</b> ${r.app}
+                <b>Register:</b> ${r.register}<br>
+                <b>Appraisal:</b> ${r.appraisal}
             </div>
         `);
 
@@ -127,15 +138,11 @@ function renderMarkers(data){
     });
 }
 
-function filterCategory(cat){
-    if(cat==="all"){
-        renderMarkers(restaurants);
-    }else{
-        renderMarkers(restaurants.filter(r=>r.type===cat));
-    }
-}
+document.getElementById("searchBox").addEventListener("input",renderMarkers);
+document.getElementById("categoryFilter").addEventListener("change",renderMarkers);
+document.getElementById("registerFilter").addEventListener("change",renderMarkers);
 
-renderMarkers(restaurants);
+renderMarkers();
 </script>
 
 </body>
