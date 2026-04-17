@@ -84,7 +84,7 @@ lat:22.3240,lng:114.1680,
 reg:"formal",
 app:"premium",
 dish:"BBQ pork buns",
-desc:"Standardized menu emphasizes quality and global branding.",
+desc:"Standardized menu emphasizes global branding.",
 img:"https://upload.wikimedia.org/wikipedia/commons/0/0b/TimHoWan.jpg"
 },
 
@@ -93,8 +93,8 @@ name:"Australia Dairy Company",
 lat:22.3045,lng:114.1710,
 reg:"informal",
 app:"efficient",
-dish:"Eggs, toast",
-desc:"Minimal language reflects fast-paced dining culture.",
+dish:"Scrambled eggs, toast",
+desc:"Minimal discourse reflects fast dining culture.",
 img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Australia_Dairy_Company.jpg"
 },
 
@@ -104,7 +104,7 @@ lat:22.2831,lng:114.1548,
 reg:"informal",
 app:"authentic",
 dish:"Wonton noodles",
-desc:"Simple naming highlights tradition.",
+desc:"Simple wording highlights tradition.",
 img:"https://upload.wikimedia.org/wikipedia/commons/4/45/Wonton_noodles.jpg"
 },
 
@@ -114,8 +114,18 @@ lat:22.2842,lng:114.1516,
 reg:"informal",
 app:"traditional",
 dish:"Beef brisket noodles",
-desc:"Direct wording reflects everyday discourse.",
+desc:"Direct naming reflects everyday discourse.",
 img:"https://upload.wikimedia.org/wikipedia/commons/3/30/Beef_brisket_noodle.jpg"
+},
+
+{
+name:"Yat Lok",
+lat:22.2829,lng:114.1554,
+reg:"semi-formal",
+app:"famous",
+dish:"Roast goose",
+desc:"Combines prestige and accessibility.",
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Roast_goose.jpg"
 },
 
 {
@@ -124,25 +134,91 @@ lat:22.2867,lng:114.1578,
 reg:"formal",
 app:"luxury",
 dish:"Fine Cantonese cuisine",
-desc:"Formal discourse constructs prestige.",
+desc:"Formal discourse constructs exclusivity.",
 img:"https://upload.wikimedia.org/wikipedia/commons/1/12/Lung_King_Heen.jpg"
+},
+
+{
+name:"Tsui Wah",
+lat:22.2820,lng:114.1555,
+reg:"standardized",
+app:"casual",
+dish:"Milk tea, noodles",
+desc:"Chain discourse reflects branding.",
+img:"https://upload.wikimedia.org/wikipedia/commons/2/2e/Tsui_Wah.jpg"
+},
+
+{
+name:"Honeymoon Dessert",
+lat:22.2960,lng:114.1720,
+reg:"hybrid",
+app:"youth",
+dish:"Mango sago",
+desc:"Trendy language targets youth culture.",
+img:"https://upload.wikimedia.org/wikipedia/commons/5/5e/Mango_sago.jpg"
+},
+
+{
+name:"Din Tai Fung",
+lat:22.2980,lng:114.1725,
+reg:"global",
+app:"premium",
+dish:"Xiaolongbao",
+desc:"Global discourse emphasizes consistency.",
+img:"https://upload.wikimedia.org/wikipedia/commons/1/1c/Xiaolongbao.jpg"
+},
+
+{
+name:"Ho Hung Kee",
+lat:22.2790,lng:114.1580,
+reg:"formal",
+app:"prestige",
+dish:"Wonton noodles",
+desc:"Michelin discourse signals quality.",
+img:"https://upload.wikimedia.org/wikipedia/commons/4/45/Wonton_noodles.jpg"
+},
+
+{
+name:"Joy Hing",
+lat:22.2765,lng:114.1720,
+reg:"informal",
+app:"local",
+dish:"BBQ pork rice",
+desc:"Simple language reflects local identity.",
+img:"https://upload.wikimedia.org/wikipedia/commons/5/59/Char_siu.jpg"
+},
+
+{
+name:"Kam Wah Cafe",
+lat:22.3245,lng:114.1695,
+reg:"informal",
+app:"classic",
+dish:"Pineapple bun",
+desc:"Everyday discourse reflects tradition.",
+img:"https://upload.wikimedia.org/wikipedia/commons/2/2a/Pineapple_bun.jpg"
+},
+
+{
+name:"Lin Heung Tea House",
+lat:22.2845,lng:114.1525,
+reg:"informal",
+app:"traditional",
+dish:"Dim sum",
+desc:"Old-style discourse reflects heritage.",
+img:"https://upload.wikimedia.org/wikipedia/commons/3/3c/Dim_sum.jpg"
+},
+
+{
+name:"Crystal Jade",
+lat:22.2950,lng:114.1700,
+reg:"standardized",
+app:"corporate",
+dish:"Xiaolongbao",
+desc:"Corporate discourse reflects chain branding.",
+img:"https://upload.wikimedia.org/wikipedia/commons/1/1c/Xiaolongbao.jpg"
 }
 
 ];
-
-// 自动扩展到30+
-for(let i=1;i<=25;i++){
- data.push({
- name:"Local Eatery "+i,
- lat:22.28+Math.random()*0.06,
- lng:114.15+Math.random()*0.06,
- reg:["informal","formal","hybrid"][i%3],
- app:["authentic","premium","casual"][i%3],
- dish:"Local dish",
- desc:"Typical Hong Kong food discourse pattern.",
- img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400"
- });
-}
 
 var markers=[];
 
